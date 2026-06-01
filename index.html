@@ -11,6 +11,8 @@
     <title>Jw Player</title>
     <link rel="shortcut icon" type="image/x-icon" href="https://i.postimg.cc/YC3Npf10/image.webp">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500&display=swap');
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
@@ -23,182 +25,301 @@
 
         /* Header */
         .header {
-            background: #1e1e1e;
-            padding: 16px 20px;
+            background: #1a1a1a;
+            padding: 14px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid #2a2a2a;
+            position: sticky;
+            top: 0;
+            z-index: 50;
         }
 
-        .header h1 {
-            font-size: 20px;
+        .header-title {
+            font-family: 'Bebas Neue', 'Impact', sans-serif;
+            font-size: 28px;
             font-weight: 400;
-            color: #fff;
+            color: #ffffff;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(30,136,229,0.4);
         }
 
-        .header-icon {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, #1e88e5, #1565c0);
-            border-radius: 8px;
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .history-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(30,136,229,0.15);
+            border: 1px solid rgba(30,136,229,0.3);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .header-icon svg {
-            width: 20px;
-            height: 20px;
-            fill: #fff;
+        .history-btn:hover, .history-btn:active {
+            background: rgba(30,136,229,0.3);
+        }
+
+        .history-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: #1e88e5;
         }
 
         /* Container */
         .container {
-            padding: 20px;
+            padding: 24px 20px;
             max-width: 800px;
             margin: 0 auto;
         }
 
         /* Input Groups */
         .input-group {
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .input-group input {
             width: 100%;
             background: #1e1e1e;
-            border: 1px solid #3a3a3a;
-            border-radius: 8px;
+            border: 1px solid #333;
+            border-radius: 10px;
             padding: 16px;
             color: #e0e0e0;
-            font-size: 16px;
-            transition: border-color 0.2s;
+            font-size: 15px;
+            transition: border-color 0.2s, box-shadow 0.2s;
             font-family: inherit;
         }
 
         .input-group input:focus {
             outline: none;
             border-color: #1e88e5;
+            box-shadow: 0 0 0 3px rgba(30,136,229,0.12);
         }
 
-        .input-group input::placeholder {
-            color: #757575;
-        }
+        .input-group input::placeholder { color: #555; }
 
-        /* DRM row - side by side */
+        /* DRM row */
         .drm-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
-        .drm-row .input-group {
-            margin-bottom: 0;
-        }
+        .drm-row .input-group { margin-bottom: 0; }
 
-        /* Helper text */
         .helper-text {
-            color: #757575;
+            color: #555;
             font-size: 12px;
             margin-top: 6px;
-            padding-left: 4px;
-        }
-
-        /* Play Button FAB */
-        .play-button {
-            width: 64px;
-            height: 64px;
-            background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
-            border: none;
-            border-radius: 50%;
-            position: fixed;
-            bottom: 32px;
-            right: 32px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(30, 136, 229, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            z-index: 100;
-        }
-
-        .play-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 16px rgba(30, 136, 229, 0.6);
-        }
-
-        .play-button:active {
-            transform: scale(0.95);
-        }
-
-        .play-button svg {
-            width: 28px;
-            height: 28px;
-            fill: #fff;
-            margin-left: 4px;
-        }
-
-        /* Error Dialog */
-        .error-dialog {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #1e1e1e;
-            padding: 24px;
-            border-radius: 12px;
-            max-width: 90%;
-            width: 380px;
-            z-index: 10001;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.7);
-        }
-
-        .error-dialog.active { display: block; }
-
-        .error-title {
-            color: #ff5252;
-            font-size: 18px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .error-message {
-            color: #e0e0e0;
-            margin-bottom: 20px;
+            padding-left: 2px;
             line-height: 1.5;
         }
 
-        .error-button {
-            width: 100%;
-            padding: 12px;
-            background: #1e88e5;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
+        /* FAB Play Button */
+        .play-button {
+            width: 62px; height: 62px;
+            background: linear-gradient(135deg, #1e88e5, #1565c0);
+            border: none; border-radius: 50%;
+            position: fixed; bottom: 30px; right: 28px;
             cursor: pointer;
+            box-shadow: 0 4px 16px rgba(30,136,229,0.45);
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.25s; z-index: 100;
         }
 
-        /* Overlay for error */
-        .overlay {
+        .play-button:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(30,136,229,0.6); }
+        .play-button:active { transform: scale(0.94); }
+
+        .play-button svg { width: 28px; height: 28px; fill: #fff; margin-left: 3px; }
+
+        /* ── History Sheet ── */
+        .sheet-overlay {
             display: none;
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.65);
+            z-index: 200;
+        }
+        .sheet-overlay.active { display: block; }
+
+        .history-sheet {
             position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.6);
-            z-index: 10000;
+            bottom: -100%;
+            left: 0; right: 0;
+            height: 55vh;
+            background: #1a1a1a;
+            border-radius: 20px 20px 0 0;
+            z-index: 201;
+            transition: bottom 0.35s cubic-bezier(0.32,0.72,0,1);
+            display: flex;
+            flex-direction: column;
         }
 
-        .overlay.active { display: block; }
+        .history-sheet.open { bottom: 0; }
+
+        .sheet-handle {
+            width: 40px; height: 4px;
+            background: #3a3a3a;
+            border-radius: 2px;
+            margin: 12px auto 0;
+            flex-shrink: 0;
+        }
+
+        .sheet-header {
+            padding: 14px 20px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #2a2a2a;
+            flex-shrink: 0;
+        }
+
+        .sheet-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .sheet-close {
+            width: 30px; height: 30px;
+            background: #2a2a2a;
+            border: none; border-radius: 50%;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .sheet-close svg { width: 16px; height: 16px; fill: #aaa; }
+
+        .sheet-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px 0;
+        }
+
+        .sheet-body::-webkit-scrollbar { width: 4px; }
+        .sheet-body::-webkit-scrollbar-track { background: transparent; }
+        .sheet-body::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+        .history-empty {
+            text-align: center;
+            color: #555;
+            padding: 40px 20px;
+            font-size: 14px;
+        }
+
+        .history-item {
+            padding: 14px 20px;
+            border-bottom: 1px solid #222;
+            cursor: pointer;
+            transition: background 0.15s;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .history-item:hover, .history-item:active { background: #222; }
+
+        .history-item-icon {
+            width: 36px; height: 36px;
+            background: rgba(30,136,229,0.15);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .history-item-icon svg { width: 18px; height: 18px; fill: #1e88e5; }
+
+        .history-item-content { flex: 1; min-width: 0; }
+
+        .history-item-type {
+            font-size: 11px;
+            color: #1e88e5;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+        }
+
+        .history-item-url {
+            font-size: 13px;
+            color: #ccc;
+            word-break: break-all;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .history-item-time {
+            font-size: 11px;
+            color: #555;
+            margin-top: 4px;
+        }
+
+        .sheet-clear-btn {
+            margin: 10px 20px;
+            padding: 10px;
+            background: rgba(255,82,82,0.1);
+            border: 1px solid rgba(255,82,82,0.25);
+            border-radius: 8px;
+            color: #ff5252;
+            font-size: 13px;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .sheet-clear-btn:hover { background: rgba(255,82,82,0.2); }
+
+        /* Error Dialog */
+        .error-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.6); z-index: 300;
+        }
+        .error-overlay.active { display: block; }
+
+        .error-dialog {
+            display: none; position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1e1e1e; padding: 24px;
+            border-radius: 14px; max-width: 90%; width: 360px;
+            z-index: 301; box-shadow: 0 8px 30px rgba(0,0,0,0.7);
+        }
+        .error-dialog.active { display: block; }
+
+        .error-title {
+            color: #ff5252; font-size: 17px;
+            margin-bottom: 12px;
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .error-message {
+            color: #ccc; margin-bottom: 20px;
+            line-height: 1.6; font-size: 14px;
+        }
+
+        .error-button {
+            width: 100%; padding: 12px;
+            background: #1e88e5; color: #fff;
+            border: none; border-radius: 8px;
+            font-size: 15px; cursor: pointer;
+        }
 
         @media (max-width: 600px) {
             .container { padding: 16px; }
-            .play-button { bottom: 24px; right: 24px; width: 56px; height: 56px; }
+            .play-button { bottom: 22px; right: 22px; width: 56px; height: 56px; }
             .drm-row { grid-template-columns: 1fr; }
         }
     </style>
@@ -207,44 +328,60 @@
 
 <!-- Header -->
 <div class="header">
-    <h1>Jw Player</h1>
-    <div class="header-icon">
-        <svg viewBox="0 0 24 24"><path d="M8,5.14V19.14L19,12.14L8,5.14Z"/></svg>
+    <div class="header-title">Jw Player</div>
+    <div class="header-right">
+        <div class="history-btn" id="historyBtn" title="History">
+            <svg viewBox="0 0 24 24">
+                <path d="M13,3A9,9 0 0,0 4,12H1L4.89,15.89L4.96,16.03L9,12H6A7,7 0 0,1 13,5A7,7 0 0,1 20,12A7,7 0 0,1 13,19C11.07,19 9.32,18.21 8.06,16.94L6.64,18.36C8.27,20 10.5,21 13,21A9,9 0 0,0 22,12A9,9 0 0,0 13,3Z"/>
+            </svg>
+        </div>
     </div>
 </div>
 
-<!-- Main Form -->
+<!-- Form -->
 <div class="container">
-
     <div class="input-group">
-        <input type="text" id="mediaLink" placeholder="Media Link: M3U8 / MPD">
-        <div class="helper-text">Paste your stream URL here</div>
+        <input type="text" id="mediaLink" placeholder="Media Link: M3U8 / MPD (supports auto-parse with |)">
+        <div class="helper-text">Put URL or full format</div>
     </div>
 
     <div class="drm-row">
         <div class="input-group">
-            <input type="text" id="KeyId" placeholder="KeyId">
+            <input type="text" id="clearKeyId" placeholder="KeyId">
         </div>
         <div class="input-group">
-            <input type="text" id="Key" placeholder="Key">
+            <input type="text" id="clearKey" placeholder="Key">
         </div>
     </div>
 
-    <div class="helper-text" style="margin-top: -8px; margin-bottom: 16px;">
-        Leave KeyId &amp; Key empty for Hls type URL. script is only for public help purpose, made by @Denver1769.
+    <div class="helper-text" style="margin-bottom: 8px;">
+        Leave KeyId &amp; Key empty for HLS/M3U8. Script is only for public help purpose, made by @Denver1769.
     </div>
-
 </div>
 
-<!-- FAB Play Button -->
+<!-- FAB -->
 <button class="play-button" id="playBtn">
     <svg viewBox="0 0 24 24"><path d="M8,5.14V19.14L19,12.14L8,5.14Z"/></svg>
 </button>
 
-<!-- Error Overlay -->
-<div class="overlay" id="overlay" onclick="closeError()"></div>
+<!-- History Sheet -->
+<div class="sheet-overlay" id="sheetOverlay" onclick="closeHistory()"></div>
+<div class="history-sheet" id="historySheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <div class="sheet-title">Watch History</div>
+        <button class="sheet-close" onclick="closeHistory()">
+            <svg viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/></svg>
+        </button>
+    </div>
+    <div class="sheet-body" id="historyList"></div>
+    <div class="sheet-clear-btn" id="clearHistoryBtn" onclick="clearHistory()" style="display:none;">
+        🗑 Clear History
+    </div>
+</div>
 
-<!-- Error Dialog -->
+<!-- Error -->
+<div class="error-overlay" id="errorOverlay" onclick="closeError()"></div>
 <div class="error-dialog" id="errorDialog">
     <div class="error-title">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="#ff5252">
@@ -257,64 +394,203 @@
 </div>
 
 <script>
-    // Made by Denver1769
+// ── History Storage ──────────────────────────────────────
+const HISTORY_KEY = 'jw_player_history';
+const MAX_HISTORY = 50;
 
-    document.getElementById('playBtn').addEventListener('click', playMedia);
+function getHistory() {
+    try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; }
+    catch(e) { return []; }
+}
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') playMedia();
-        if (e.key === 'Escape') closeError();
+function saveToHistory(type, url, keyId, key) {
+    const history = getHistory();
+    // Remove duplicate
+    const idx = history.findIndex(h => h.url === url && h.keyId === keyId);
+    if (idx !== -1) history.splice(idx, 1);
+    history.unshift({
+        type, url, keyId: keyId || '', key: key || '',
+        time: Date.now()
     });
+    if (history.length > MAX_HISTORY) history.pop();
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+}
 
-    function showError(msg) {
-        document.getElementById('errorMessage').textContent = msg;
-        document.getElementById('errorDialog').classList.add('active');
-        document.getElementById('overlay').classList.add('active');
+function clearHistory() {
+    localStorage.removeItem(HISTORY_KEY);
+    renderHistory();
+}
+
+function formatTime(ts) {
+    const d = new Date(ts);
+    const now = new Date();
+    const diff = Math.floor((now - d) / 1000);
+    if (diff < 60) return 'Just now';
+    if (diff < 3600) return Math.floor(diff/60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff/3600) + 'h ago';
+    return d.toLocaleDateString();
+}
+
+function renderHistory() {
+    const list = document.getElementById('historyList');
+    const clearBtn = document.getElementById('clearHistoryBtn');
+    const history = getHistory();
+
+    if (!history.length) {
+        list.innerHTML = '<div class="history-empty">📭 No history yet.<br>Played streams will appear here.</div>';
+        clearBtn.style.display = 'none';
+        return;
     }
 
-    function closeError() {
-        document.getElementById('errorDialog').classList.remove('active');
-        document.getElementById('overlay').classList.remove('active');
+    clearBtn.style.display = 'block';
+    list.innerHTML = history.map((h, i) => `
+        <div class="history-item" onclick="replayHistory(${i})">
+            <div class="history-item-icon">
+                <svg viewBox="0 0 24 24"><path d="M8,5.14V19.14L19,12.14L8,5.14Z"/></svg>
+            </div>
+            <div class="history-item-content">
+                <div class="history-item-type">${h.type}${h.keyId ? ' · ClearKey' : ''}</div>
+                <div class="history-item-url">${h.url}</div>
+                <div class="history-item-time">${formatTime(h.time)}</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function replayHistory(idx) {
+    const h = getHistory()[idx];
+    if (!h) return;
+    closeHistory();
+    let redirectLink = 'Player.html?';
+    if (h.type === 'MPD') {
+        redirectLink += `mpd=${encodeURIComponent(h.url)}`;
+        if (h.keyId && h.key) redirectLink += `&keyId=${encodeURIComponent(h.keyId)}&key=${encodeURIComponent(h.key)}`;
+    } else {
+        redirectLink += `m3u8=${encodeURIComponent(h.url)}`;
+    }
+    window.location.href = redirectLink;
+}
+
+function openHistory() {
+    renderHistory();
+    document.getElementById('sheetOverlay').classList.add('active');
+    document.getElementById('historySheet').classList.add('open');
+}
+
+function closeHistory() {
+    document.getElementById('sheetOverlay').classList.remove('active');
+    document.getElementById('historySheet').classList.remove('open');
+}
+
+// ── Auto-parse pipe format ───────────────────────────────
+function parsePipeInput(input) {
+    const result = { url: '', keyId: '', key: '', drmScheme: '' };
+    if (!input.includes('|')) { result.url = input.trim(); return result; }
+
+    const pipeIdx = input.indexOf('|');
+    result.url = input.substring(0, pipeIdx).trim();
+    const paramStr = input.substring(pipeIdx + 1);
+    const paramRegex = /([a-zA-Z_-]+)\s*=\s*([^&]+)/g;
+    let m;
+    while ((m = paramRegex.exec(paramStr)) !== null) {
+        const k = m[1].trim().toLowerCase();
+        const v = m[2].trim();
+        if (k === 'drmlicense') {
+            if (v.includes(':') && !v.startsWith('http')) {
+                const parts = v.split(':');
+                if (parts.length === 2) {
+                    result.keyId = parts[0].trim().replace(/-/g, '');
+                    result.key   = parts[1].trim().replace(/-/g, '');
+                }
+            }
+        } else if (k === 'drmscheme') {
+            result.drmScheme = v.toLowerCase();
+        }
+    }
+    return result;
+}
+
+// ── Error helpers ────────────────────────────────────────
+function showError(msg) {
+    document.getElementById('errorMessage').textContent = msg;
+    document.getElementById('errorDialog').classList.add('active');
+    document.getElementById('errorOverlay').classList.add('active');
+}
+
+function closeError() {
+    document.getElementById('errorDialog').classList.remove('active');
+    document.getElementById('errorOverlay').classList.remove('active');
+}
+
+// ── Play ─────────────────────────────────────────────────
+function playMedia() {
+    let rawInput = document.getElementById('mediaLink').value.trim();
+    let clearKeyId = document.getElementById('clearKeyId').value.trim().replace(/-/g, '');
+    let clearKey   = document.getElementById('clearKey').value.trim().replace(/-/g, '');
+
+    if (!rawInput) { showError('Please enter a Media Link (M3U8 or MPD).'); return; }
+
+    // Auto-parse pipe format
+    if (rawInput.includes('|')) {
+        const parsed = parsePipeInput(rawInput);
+        rawInput = parsed.url;
+        document.getElementById('mediaLink').value = rawInput;
+        if (parsed.keyId && !clearKeyId) {
+            clearKeyId = parsed.keyId;
+            document.getElementById('clearKeyId').value = clearKeyId;
+        }
+        if (parsed.key && !clearKey) {
+            clearKey = parsed.key;
+            document.getElementById('clearKey').value = clearKey;
+        }
     }
 
-    function playMedia() {
-        const mediaLink = document.getElementById('mediaLink').value.trim();
-        const clearKey   = document.getElementById('clearKey').value.trim();
-        const clearKeyId = document.getElementById('clearKeyId').value.trim();
+    const isM3U8 = /\.m3u8/i.test(rawInput);
+    const isMPD  = /\.mpd/i.test(rawInput);
 
-        // Validation
-        if (!mediaLink) {
-            showError('Please enter a Media Link (M3U8, MP4, MKV & MPD).');
+    if (!isM3U8 && !isMPD) {
+        showError('Unsupported format.\nPlease enter a valid .m3u8 or .mpd link.');
+        return;
+    }
+
+    // Validate DRM fields
+    if (isMPD) {
+        if ((clearKeyId && !clearKey) || (!clearKeyId && clearKey)) {
+            showError('For MPD DRM, please fill both KeyId and Key.\nLeave both empty for unencrypted MPD.');
             return;
         }
-
-        const isM3U8 = mediaLink.includes('.m3u8') || mediaLink.includes('.M3U8');
-        const isMPD  = mediaLink.includes('.mpd')  || mediaLink.includes('.MPD');
-
-        if (!isM3U8 && !isMPD) {
-            showError('Unsupported format.\nPlease enter a valid .m3u8 or .mpd link.');
-            return;
+        if (clearKeyId && clearKeyId.length !== 32) {
+            showError('KeyId must be 32 hex characters (16 bytes).'); return;
         }
-
-        let redirectLink = 'Player.html?';
-
-        if (isMPD) {
-            // Key & KeyId both required for MPD DRM; optional without
-            if ((clearKeyId && !clearKey) || (!clearKeyId && clearKey)) {
-                showError('For MPD DRM, please fill the KeyId and Key.\nLeave both empty to attempt unencrypted MPD.');
-                return;
-            }
-            redirectLink += `mpd=${encodeURIComponent(mediaLink)}`;
-            if (clearKeyId && clearKey) {
-                redirectLink += `&keyId=${encodeURIComponent(clearKeyId)}&key=${encodeURIComponent(clearKey)}`;
-            }
-        } else {
-            // M3U8 - keys ignored
-            redirectLink += `m3u8=${encodeURIComponent(mediaLink)}`;
+        if (clearKey && clearKey.length !== 32) {
+            showError('Key must be 32 hex characters (16 bytes).'); return;
         }
-
-        window.location.href = redirectLink;
     }
+
+    let redirectLink = 'Player.html?';
+
+    if (isMPD) {
+        redirectLink += `mpd=${encodeURIComponent(rawInput)}`;
+        if (clearKeyId && clearKey) redirectLink += `&keyId=${encodeURIComponent(clearKeyId)}&key=${encodeURIComponent(clearKey)}`;
+        saveToHistory('MPD', rawInput, clearKeyId, clearKey);
+    } else {
+        redirectLink += `m3u8=${encodeURIComponent(rawInput)}`;
+        saveToHistory('M3U8', rawInput, '', '');
+    }
+
+    window.location.href = redirectLink;
+}
+
+// ── Event Listeners ───────────────────────────────────────
+document.getElementById('playBtn').addEventListener('click', playMedia);
+document.getElementById('historyBtn').addEventListener('click', openHistory);
+document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') playMedia();
+    if (e.key === 'Escape') {
+        closeError();
+        closeHistory();
+    }
+});
 </script>
 </body>
 </html>
