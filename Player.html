@@ -4,14 +4,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Player</title>
+  <title>Player</title>
   <link rel="shortcut icon" type="image/x-icon" href="https://i.postimg.cc/YC3Npf10/image.webp">
-   <link rel="stylesheet" href="Player.css">
+  <link rel="stylesheet" href="Player.css">
 </head>
 
 <body>  
-	<script src="https://cdn.jwplayer.com/libraries/SAHhwvZq.js"></script>
-<script> jwplayer.defaults = jwDefaults; </script>
+  <script src="https://cdn.jwplayer.com/libraries/SAHhwvZq.js"></script>
+  <script> jwplayer.defaults = jwDefaults; </script>
     <div id="jwplayerDiv"></div>
     <script>
         const queryParams = new URLSearchParams(window.location.search);
@@ -22,17 +22,16 @@
 
         function playMedia() {
             let playerConfig = {
-            	
-            skin: {
-       name: "Denver",
-       active: "RED", /* kuch bhi colour dalke experiment kro*/
-       inactive: "white",/* kuch bhi colour dalke experiment kro*/
-       background: "black"/* kuch bhi colour dalke experiment kro*/
-    },
+                skin: {
+                    name: "Denver",
+                    active: "RED",
+                    inactive: "white",
+                    background: "black"
+                },
                 "autostart": true,
                 "preload": "none",
                 "repeat": true,
-                "Volume": "100",
+                "volume": 100,
                 "mute": false,
                 "stretching": "exactfit",
                 "width": "100%",
@@ -56,8 +55,7 @@
                 playerConfig = {
                     ...playerConfig,
                     file: m3u8Link,
-                    type: "hls",
-                    drm: {}
+                    type: "hls"
                 };
             }
 
@@ -79,9 +77,9 @@
 </div>
 
 <script>
-setTimeout(videovisible, 5000)
+setTimeout(videovisible, 5000);
 function videovisible() {
-    document.getElementById('loading').style.display = 'none'
+    document.getElementById('loading').style.display = 'none';
 }
 </script> 
 
